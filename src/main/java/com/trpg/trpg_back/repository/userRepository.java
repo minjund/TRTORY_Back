@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface userRepository extends JpaRepository<user, Long> {
-    List<user> findAll();
+    List<user> findByUserIdAndUserPw(String userId,String userPw);
 
     @Override
     <S extends user> S save(S entity);

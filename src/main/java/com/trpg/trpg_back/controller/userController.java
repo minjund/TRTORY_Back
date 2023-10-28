@@ -4,6 +4,7 @@ package com.trpg.trpg_back.controller;
 import com.trpg.trpg_back.entity.user;
 import com.trpg.trpg_back.service.userService;
 import jakarta.annotation.Resource;
+import org.apache.catalina.User;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -24,18 +25,23 @@ public class userController {
     userService userService;
 
     @PostMapping({"/signup"})
-    public ResponseEntity signUp (ModelMap model, @RequestBody user user) throws Exception {
+    public ResponseEntity signUp (@RequestBody user user) throws Exception {
         HttpHeaders resHeader = new HttpHeaders();
-        user.setUse_yn("Y");
+        //회원 가입 여부 성공
+        user.setUseYn("Y");
+
         resHeader.add("Content-Type", "application/json;charset=UTF-8");
         return new ResponseEntity<>(userService.signup(user), HttpStatus.OK);
     }
+    @GetMapping({"/signIn"})
+    public ResponseEntity signIn (@RequestParam(value = "userId") String userId, @RequestParam(value = "userPw") String userPw) throws Exception {
+        HttpHeaders resHeader = new HttpHeaders();
+        //유저 entity 세팅
+        user user = new user();
+        user.setUserId(userId);
+        user.setUserPw(userPw);
 
-
-    // 모든 회원 조회
-    @GetMapping(produces = { MediaType.APPLICATION_JSON_VALUE },path = {"/findAll"})
-    public ResponseEntity<List<user>> getAllUsers() {
-        List<user> member = userService.findAll();
-        return new ResponseEntity<List<user>>(member, HttpStatus.OK);
+        resHeader.add("Content-Type", "application/json;charset=UTF-8");
+        return new ResponseEntity<>(userService.signIn(user), HttpStatus.OK);
     }
 }
