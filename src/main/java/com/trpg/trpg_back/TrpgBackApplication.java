@@ -12,6 +12,8 @@ public class TrpgBackApplication {
     public static void main(String[] args) {
         SpringApplication.run(TrpgBackApplication.class, args);
     }
+
+    //cors 처리
     @Bean
     public WebMvcConfigurer corsConfigurer() {
         return new WebMvcConfigurer() {
