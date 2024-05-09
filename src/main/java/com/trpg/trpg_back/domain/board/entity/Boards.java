@@ -15,33 +15,43 @@ import java.time.LocalDateTime;
 public class Boards extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long board_id;
+    @Column(name = "board_seq", columnDefinition = "bigint", nullable = false)
+    private long boardSeq;
+
+    @Column(name = "board_id", columnDefinition = "bigint", nullable = false)
+    private long boardId;
 
     @Column(name = "board_title", columnDefinition = "varchar(45)", nullable = false)
-    private String board_title;
+    private String boardTitle;
 
     @Column(name = "board_contents", columnDefinition = "varchar(500)", nullable = false)
-    private String board_contents;
+    private String boardContents;
 
     @Column(name = "board_type", columnDefinition = "varchar(45)", nullable = false)
-    private String board_type;
+    private String boardType;
 
-    @Column(name = "writer_id", columnDefinition = "varchar(45)", nullable = false)
-    private String writer_id;
+    @Column(name = "writer_id", columnDefinition = "int", nullable = false)
+    private int writerId;
 
     @Column(name = "use_yn", columnDefinition = "varchar(2)", nullable = false)
-    private String use_yn;
+    private String useYn;
 
-    public static Boards createBoard(String board_title, String board_contents, String board_type, String writer_id){
-        Boards boards = new Boards();
-        boards.board_title = board_title;
-        boards.board_contents = board_contents;
-        boards.board_type = board_type;
-        boards.writer_id = writer_id;
-        boards.use_yn = "Y";
-        return boards;
+    public void createBoard(String board_title, String board_contents, BoardsType board_type, int writer_id){
+
+        this.boardId = this.boardSeq;
+        this.boardTitle = board_title;
+        this.boardContents = board_contents;
+        this.boardType = board_type.name();
+        this.writerId = writer_id;
+        this.useYn = "Y";
     }
 
 
+    public void updateBoard(String boardTitle, String boardContents, BoardsType boardType, int writerId) {
+        this.boardTitle = boardTitle;
+        this.boardContents = boardContents;
+        this.boardType = boardType.name();
+        this.writerId = writerId;
 
+    }
 }

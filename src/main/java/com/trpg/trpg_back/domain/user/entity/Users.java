@@ -11,7 +11,7 @@ public class Users extends BaseEntity {
 
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private long seq;
+        private long userSeq;
 
         @Column(name = "email", columnDefinition = "varchar(255)", nullable = true)
         private String email;
