@@ -7,7 +7,7 @@ import lombok.Data;
 @Data
 public class BoardsRequest {
 
-    long boardId;
+    Long boardId;
     String boardTitle;
     BoardsType boardType;
     String boardContents;
