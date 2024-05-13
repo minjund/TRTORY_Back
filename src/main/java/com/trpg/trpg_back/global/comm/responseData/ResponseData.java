@@ -8,8 +8,7 @@ import lombok.ToString;
 @Setter
 @ToString
 public class ResponseData<T> {
-        private String code;
-        private String status;
+        private int code;
         private String message;
         private T item;
 }

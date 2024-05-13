@@ -19,7 +19,7 @@ class BoardsTest {
         boardsRequest.setWriterId(1);
 
         //when
-        boards.createBoard(boardsRequest.getBoardTitle(), boardsRequest.getBoardContents(), BoardsType.DEFAULT, boardsRequest.getWriterId());
+        boards.createBoard(boardsRequest.getBoardTitle(), boardsRequest.getBoardContents(), BoardsType.NEW, boardsRequest.getWriterId());
 
         //then
         assertEquals(boardsRequest.getBoardTitle(), boards.getBoardTitle());
@@ -27,5 +27,18 @@ class BoardsTest {
         assertEquals(boardsRequest.getBoardType().name(), boards.getBoardType());
         assertEquals(boardsRequest.getWriterId(), boards.getWriterId());
         assertEquals("Y", boards.getUseYn());
+    }
+
+    @Test
+    @DisplayName("게시판 종류 리스트 조회")
+    void boardsTypeList() {
+        //given
+        Boards boards = new Boards();
+
+        //when
+        BoardsType[] boardsTypes = boards.boardsTypeList();
+
+        //then
+        assertEquals(4, boardsTypes.length);
     }
 }

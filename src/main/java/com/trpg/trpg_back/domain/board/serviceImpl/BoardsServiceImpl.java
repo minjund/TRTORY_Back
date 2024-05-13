@@ -11,33 +11,30 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class BoardsServiceImpl {
+    private static Boards boards = new Boards();
 
     private final BoardsRepository boardsRepository;
 
     @Transactional
-    public BoardsResponse saveBoards(BoardsRequest boardsRequest) {
-
-        Boards boards = new Boards();
-
+    public Long saveBoards(BoardsRequest boardsRequest) {
         boards.createBoard(boardsRequest.getBoardTitle(),
                 boardsRequest.getBoardContents(),
-                BoardsType.DEFAULT,
+                BoardsType.NEW,
                 boardsRequest.getWriterId());
 
         boards = boardsRepository.save(boards);
 
-        return new BoardsResponse(boards.getBoardId());
+        return boards.getBoardId();
     }
 
     @Transactional
-    public BoardsResponse updateBoard(BoardsRequest boardsRequest) {
+    public Long updateBoard(BoardsRequest boardsRequest) {
         Boards boards = boardsRepository.findById(boardsRequest.getBoardId())
                 .orElseThrow(NoSearchBoardsException::new);
 
@@ -48,7 +45,7 @@ public class BoardsServiceImpl {
                 boardsRequest.getWriterId()
         );
 
-        return new BoardsResponse(boards.getBoardId());
+        return boards.getBoardId();
     }
 
     public List<BoardsResponse> searchBoards(Long boardId) {
@@ -63,5 +60,9 @@ public class BoardsServiceImpl {
         return boards.stream()
                 .map(BoardsResponse::new)
                 .toList();
+    }
+
+    public BoardsType[] boardsTypeList() {
+        return boards.boardsTypeList();
     }
 }

@@ -29,14 +29,14 @@ class BoardsServiceImplTest {
         BoardsRequest boardsRequest = new BoardsRequest();
         boardsRequest.setBoardTitle("신나는모험");
         boardsRequest.setBoardContents("가나나다다라");
-        boardsRequest.setBoardType(BoardsType.DEFAULT);
+        boardsRequest.setBoardType(BoardsType.NEW);
         boardsRequest.setWriterId(1);
 
         //when
-        BoardsResponse boardsResponse = boardsServiceImpl.saveBoards(boardsRequest);
+        Long saveBoardsId = boardsServiceImpl.saveBoards(boardsRequest);
 
         //then
-        assertEquals(0, boardsResponse.getBoard_id());
+        assertEquals(0, saveBoardsId);
     }
 
     @Test
@@ -44,7 +44,7 @@ class BoardsServiceImplTest {
     void updateDbFailBoards() {
         //given
         BoardsRequest boardsRequest = new BoardsRequest();
-        boardsRequest.setBoardId(100);
+        boardsRequest.setBoardId(100L);
         boardsRequest.setBoardTitle("신나는모험");
         boardsRequest.setBoardContents("나나나");
         boardsRequest.setBoardType(BoardsType.NOTICE);
@@ -63,16 +63,16 @@ class BoardsServiceImplTest {
     void updateDbBoards() {
         //given
         BoardsRequest boardsRequest = new BoardsRequest();
-        boardsRequest.setBoardId(2);
+        boardsRequest.setBoardId(2L);
         boardsRequest.setBoardTitle("신나는모험");
         boardsRequest.setBoardContents("나나나");
         boardsRequest.setBoardType(BoardsType.NOTICE);
 
         //when
         //저장 후 업데이트
-        BoardsResponse updateBoard = boardsServiceImpl.updateBoard(boardsRequest);
+        Long updateBoardId = boardsServiceImpl.updateBoard(boardsRequest);
 
         //then
-        assertEquals(updateBoard.getBoard_id(), updateBoard.getBoard_id());
+        assertEquals(boardsRequest.getBoardId(), updateBoardId);
     }
 }

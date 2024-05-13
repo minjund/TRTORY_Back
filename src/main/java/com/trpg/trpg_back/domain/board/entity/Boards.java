@@ -24,6 +24,9 @@ public class Boards extends BaseEntity {
     @Column(name = "board_title", columnDefinition = "varchar(45)", nullable = false)
     private String boardTitle;
 
+    @Column(name = "board_comment", columnDefinition = "varchar(45)", nullable = false)
+    private String boardComment;
+
     @Column(name = "board_contents", columnDefinition = "varchar(500)", nullable = false)
     private String boardContents;
 
@@ -52,6 +55,12 @@ public class Boards extends BaseEntity {
         this.boardContents = boardContents;
         this.boardType = boardType.name();
         this.writerId = writerId;
+    }
 
+    // == 비즈니스 로직 == //
+
+    //게시판 종류 리스트 조회
+    public BoardsType[] boardsTypeList() {
+        return BoardsType.values();
     }
 }

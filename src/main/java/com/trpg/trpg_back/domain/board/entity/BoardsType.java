@@ -1,11 +1,11 @@
 package com.trpg.trpg_back.domain.board.entity;
 
 public enum BoardsType {
-    DEFAULT(0), NOTICE(1);
+    ALL, NEW, POPULAR, RECOMMEND;
 
-    private final int type;
+    private final String type;
 
-    BoardsType(int type) {
-        this.type = type;
+    BoardsType() {
+        this.type = name();
     }
 }
