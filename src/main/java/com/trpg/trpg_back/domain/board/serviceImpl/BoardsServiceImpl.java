@@ -11,7 +11,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -49,17 +48,10 @@ public class BoardsServiceImpl {
     }
 
     public List<BoardsResponse> searchBoards(Long boardId) {
-        List<Boards> boards;
+        List<BoardsResponse> boardsResponse;
+        boardsResponse = boardsRepository.searchBoard(boardId, BoardsType.NEW);
 
-        if(boardId == null){
-            boards = boardsRepository.findAll();
-        } else {
-            boards = boardsRepository.findAllById(Collections.singleton(boardId));
-        }
-
-        return boards.stream()
-                .map(BoardsResponse::new)
-                .toList();
+        return boardsResponse;
     }
 
     public BoardsType[] boardsTypeList() {

@@ -11,6 +11,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -23,7 +25,7 @@ class BoardsServiceImplTest {
 
     @Test
     @DisplayName("게시판 생성 테스트")
-//    @Rollback(value = false)
+    @Rollback(value = false)
     void insertDbBoards() {
         //given
         BoardsRequest boardsRequest = new BoardsRequest();
@@ -74,5 +76,21 @@ class BoardsServiceImplTest {
 
         //then
         assertEquals(boardsRequest.getBoardId(), updateBoardId);
+    }
+
+    @Test
+    @DisplayName("게시판 조회 성공")
+    void searchBoards() {
+        //given
+        Long boardId = null;
+
+        //when
+        //게시판 조회
+        List<BoardsResponse> boardsResponses = boardsServiceImpl.searchBoards(boardId);
+
+        //then
+        //게시판 조회 성공
+        assertFalse(boardsResponses.isEmpty());
+
     }
 }
