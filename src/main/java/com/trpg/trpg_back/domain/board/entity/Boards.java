@@ -24,7 +24,7 @@ public class Boards extends BaseEntity {
     @Column(name = "board_title", columnDefinition = "varchar(45)", nullable = false)
     private String boardTitle;
 
-    @Column(name = "board_comment", columnDefinition = "varchar(45)", nullable = false)
+    @Column(name = "board_comment", columnDefinition = "varchar(45)", nullable = true)
     private String boardComment;
 
     @Column(name = "board_contents", columnDefinition = "varchar(500)", nullable = false)
@@ -51,6 +51,7 @@ public class Boards extends BaseEntity {
 
 
     public void updateBoard(String boardTitle, String boardContents, BoardsType boardType, int writerId) {
+        this.boardId = this.boardSeq;
         this.boardTitle = boardTitle;
         this.boardContents = boardContents;
         this.boardType = boardType.name();

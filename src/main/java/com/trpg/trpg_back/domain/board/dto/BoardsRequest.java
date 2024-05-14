@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 public class BoardsRequest {
-
+    Long boardSeq;
     Long boardId;
     String boardTitle;
     BoardsType boardType;

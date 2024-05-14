@@ -23,7 +23,7 @@ class BoardsServiceImplTest {
 
     @Test
     @DisplayName("게시판 생성 테스트")
-    @Rollback(value = false)
+//    @Rollback(value = false)
     void insertDbBoards() {
         //given
         BoardsRequest boardsRequest = new BoardsRequest();
@@ -47,7 +47,7 @@ class BoardsServiceImplTest {
         boardsRequest.setBoardId(100L);
         boardsRequest.setBoardTitle("신나는모험");
         boardsRequest.setBoardContents("나나나");
-        boardsRequest.setBoardType(BoardsType.NOTICE);
+        boardsRequest.setBoardType(BoardsType.NEW);
         boardsRequest.setWriterId(1);
 
         //when
@@ -66,7 +66,7 @@ class BoardsServiceImplTest {
         boardsRequest.setBoardId(2L);
         boardsRequest.setBoardTitle("신나는모험");
         boardsRequest.setBoardContents("나나나");
-        boardsRequest.setBoardType(BoardsType.NOTICE);
+        boardsRequest.setBoardType(BoardsType.NEW);
 
         //when
         //저장 후 업데이트

@@ -16,6 +16,7 @@ class BoardsTest {
         BoardsRequest boardsRequest = new BoardsRequest();
         boardsRequest.setBoardTitle("신나는모험");
         boardsRequest.setBoardContents("가나나다다라");
+        boardsRequest.setBoardType(BoardsType.NEW);
         boardsRequest.setWriterId(1);
 
         //when
