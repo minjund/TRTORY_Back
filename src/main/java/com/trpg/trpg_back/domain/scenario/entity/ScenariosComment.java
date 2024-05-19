@@ -1,13 +1,13 @@
-package com.trpg.trpg_back.domain.board.entity;
+package com.trpg.trpg_back.domain.scenario.entity;
 
 import com.trpg.trpg_back.global.util.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 
 @Entity
-@Table(name = "board_comment")
+@Table(name = "scenario_comment")
 @Getter
-public class BoardsComment extends BaseEntity {
+public class ScenariosComment extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +25,7 @@ public class BoardsComment extends BaseEntity {
     @Column(name = "use_yn", columnDefinition = "varchar(45)", nullable = false)
     private String useYn;
 
-    @JoinColumn(name = "board_id", columnDefinition = "bigint", nullable = false)
+    @JoinColumn(name = "scenario_id", columnDefinition = "bigint", nullable = false)
     @ManyToOne(fetch = FetchType.LAZY)
-    private Boards boardId;
+    private Scenarios scenarioId;
 }

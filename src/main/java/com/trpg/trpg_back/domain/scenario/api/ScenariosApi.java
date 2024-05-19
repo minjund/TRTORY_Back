@@ -1,9 +1,9 @@
-package com.trpg.trpg_back.domain.board.api;
+package com.trpg.trpg_back.domain.scenario.api;
 
-import com.trpg.trpg_back.domain.board.dto.BoardsRequest;
-import com.trpg.trpg_back.domain.board.dto.BoardsResponse;
-import com.trpg.trpg_back.domain.board.entity.BoardsType;
-import com.trpg.trpg_back.domain.board.serviceImpl.BoardsServiceImpl;
+import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
+import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;
+import com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosType;
+import com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosServiceImpl;
 import com.trpg.trpg_back.global.comm.responseData.ResponseData;
 import com.trpg.trpg_back.global.comm.responseData.ResponseDataCode;
 import lombok.RequiredArgsConstructor;
@@ -11,34 +11,33 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
 import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/boards")
-public class BoardsApi {
+@RequestMapping("/api/v1/scenarios")
+public class ScenariosApi {
 
-    private final BoardsServiceImpl boardsServiceImpl;
+    private final ScenariosServiceImpl scenariosServiceImpl;
 
-    @GetMapping("/board-type")
-    public ResponseEntity<ResponseData<BoardsType[]>> BoardsTypeList(){
+    @GetMapping("/scenario-type")
+    public ResponseEntity<ResponseData<ScenariosType[]>> BoardsTypeList(){
         //유저 entity 세팅
-        BoardsType[] boardsTypes = boardsServiceImpl.boardsTypeList();
-        ResponseData<BoardsType[]> responseDataDTO = new ResponseData<>();
+        ScenariosType[] scenariosTypes = scenariosServiceImpl.ScenarioTypeList();
+        ResponseData<ScenariosType[]> responseDataDTO = new ResponseData<>();
 
         responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
         responseDataDTO.setMessage("게시글 조회 성공");
-        responseDataDTO.setItem(boardsTypes);
+        responseDataDTO.setItem(scenariosTypes);
 
         return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
     }
 
-    @GetMapping({"/board-list/{boardId}", "/board-list"})
-    public ResponseEntity<ResponseData<List<BoardsResponse>>> searchBoard(@PathVariable(value = "boardId", required = false) Long boardId){
-        ResponseData<List<BoardsResponse>> responseDataDTO = new ResponseData<>();
+    @GetMapping({"/scenarios-list/{scenariosId}", "/scenarios-list"})
+    public ResponseEntity<ResponseData<List<ScenariosResponse>>> searchBoard(@PathVariable(value = "scenariosId", required = false) Long boardId){
+        ResponseData<List<ScenariosResponse>> responseDataDTO = new ResponseData<>();
 
-        List<BoardsResponse> boards = boardsServiceImpl.searchBoards(boardId);
+        List<ScenariosResponse> boards = scenariosServiceImpl.searchScenario(boardId);
 
         if(boards.isEmpty()){
             responseDataDTO.setCode(ResponseDataCode.NOT_FOUND.getCode());
@@ -53,10 +52,10 @@ public class BoardsApi {
     }
 
     @PostMapping("/create-board")
-    public ResponseEntity<ResponseData<Long>> createBoard(@RequestBody BoardsRequest boardsRequest) {
+    public ResponseEntity<ResponseData<Long>> createBoard(@RequestBody ScenariosRequest scenariosRequest) {
 
         ResponseData<Long> responseDataDTO = new ResponseData<>();
-        Long saveBoardId = boardsServiceImpl.saveBoards(boardsRequest);
+        Long saveBoardId = scenariosServiceImpl.saveScenario(scenariosRequest);
 
         if (saveBoardId == null) {
             responseDataDTO.setCode(ResponseDataCode.SERVER_ERROR.getCode());
@@ -74,17 +73,17 @@ public class BoardsApi {
     }
 
     @PutMapping("/update-board")
-    public ResponseEntity<ResponseData<List<BoardsResponse>>> updateBoard(@RequestBody BoardsRequest boardsRequest) {
+    public ResponseEntity<ResponseData<List<ScenariosResponse>>> updateBoard(@RequestBody ScenariosRequest scenariosRequest) {
 
-        Long updateBoardId = boardsServiceImpl.updateBoard(boardsRequest);
+        Long updateBoardId = scenariosServiceImpl.updateScenario(scenariosRequest);
 
         if (updateBoardId == null) {
-            ResponseData<List<BoardsResponse>> responseDataDTO = new ResponseData<>();
+            ResponseData<List<ScenariosResponse>> responseDataDTO = new ResponseData<>();
             responseDataDTO.setCode(ResponseDataCode.SERVER_ERROR.getCode());
             responseDataDTO.setMessage("게시글 수정 실패");
             return new ResponseEntity<>(responseDataDTO, HttpStatus.BAD_REQUEST);
         } else {
-            ResponseData<List<BoardsResponse>> responseDataDTO = new ResponseData<>();
+            ResponseData<List<ScenariosResponse>> responseDataDTO = new ResponseData<>();
             responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
             responseDataDTO.setMessage("게시글 수정 성공");
             return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);

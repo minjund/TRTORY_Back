@@ -1,4 +1,4 @@
-package com.trpg.trpg_back.domain.board.entity;
+package com.trpg.trpg_back.domain.scenario.entity;
 
 import static com.querydsl.core.types.PathMetadataFactory.*;
 
@@ -11,20 +11,18 @@ import com.querydsl.core.types.dsl.PathInits;
 
 
 /**
- * QBoardsComment is a Querydsl query type for BoardsComment
+ * QScenariosComment is a Querydsl query type for ScenariosComment
  */
 @Generated("com.querydsl.codegen.DefaultEntitySerializer")
-public class QBoardsComment extends EntityPathBase<BoardsComment> {
+public class QScenariosComment extends EntityPathBase<ScenariosComment> {
 
-    private static final long serialVersionUID = -2034782608L;
+    private static final long serialVersionUID = 1100012458L;
 
     private static final PathInits INITS = PathInits.DIRECT2;
 
-    public static final QBoardsComment boardsComment = new QBoardsComment("boardsComment");
+    public static final QScenariosComment scenariosComment = new QScenariosComment("scenariosComment");
 
     public final com.trpg.trpg_back.global.util.QBaseEntity _super = new com.trpg.trpg_back.global.util.QBaseEntity(this);
-
-    public final QBoards boardId;
 
     public final StringPath commentContent = createString("commentContent");
 
@@ -38,29 +36,31 @@ public class QBoardsComment extends EntityPathBase<BoardsComment> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> reg_date = _super.reg_date;
 
+    public final QScenarios scenarioId;
+
     public final StringPath userId = createString("userId");
 
     public final StringPath useYn = createString("useYn");
 
-    public QBoardsComment(String variable) {
-        this(BoardsComment.class, forVariable(variable), INITS);
+    public QScenariosComment(String variable) {
+        this(ScenariosComment.class, forVariable(variable), INITS);
     }
 
-    public QBoardsComment(Path<? extends BoardsComment> path) {
+    public QScenariosComment(Path<? extends ScenariosComment> path) {
         this(path.getType(), path.getMetadata(), PathInits.getFor(path.getMetadata(), INITS));
     }
 
-    public QBoardsComment(PathMetadata metadata) {
+    public QScenariosComment(PathMetadata metadata) {
         this(metadata, PathInits.getFor(metadata, INITS));
     }
 
-    public QBoardsComment(PathMetadata metadata, PathInits inits) {
-        this(BoardsComment.class, metadata, inits);
+    public QScenariosComment(PathMetadata metadata, PathInits inits) {
+        this(ScenariosComment.class, metadata, inits);
     }
 
-    public QBoardsComment(Class<? extends BoardsComment> type, PathMetadata metadata, PathInits inits) {
+    public QScenariosComment(Class<? extends ScenariosComment> type, PathMetadata metadata, PathInits inits) {
         super(type, metadata, inits);
-        this.boardId = inits.isInitialized("boardId") ? new QBoards(forProperty("boardId")) : null;
+        this.scenarioId = inits.isInitialized("scenarioId") ? new QScenarios(forProperty("scenarioId")) : null;
     }
 
 }
