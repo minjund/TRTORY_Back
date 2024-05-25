@@ -23,13 +23,7 @@ import java.util.Map;
 public class UsersApi {
 
     private final UsersServiceImpl usersServiceImpl;
-
-
     private final JwtUtil jwtUtil;
-
-
-    private final UsersRepository usersRepository;
-
 
     @PostMapping({"/signup"})
     public ResponseEntity<ResponseData<Map<String, String>>> signUp (@RequestBody UsersRequest usersRequest) throws Exception {
