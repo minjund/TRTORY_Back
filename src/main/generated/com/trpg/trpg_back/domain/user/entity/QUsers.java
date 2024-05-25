@@ -21,21 +21,19 @@ public class QUsers extends EntityPathBase<Users> {
 
     public final com.trpg.trpg_back.global.util.QBaseEntity _super = new com.trpg.trpg_back.global.util.QBaseEntity(this);
 
-    public final StringPath email = createString("email");
-
     //inherited
     public final DateTimePath<java.time.LocalDateTime> mod_date = _super.mod_date;
-
-    public final StringPath nickName = createString("nickName");
 
     //inherited
     public final DateTimePath<java.time.LocalDateTime> reg_date = _super.reg_date;
 
     public final StringPath userDiscordId = createString("userDiscordId");
 
+    public final StringPath userEmail = createString("userEmail");
+
     public final StringPath userNickname = createString("userNickname");
 
-    public final StringPath userPw = createString("userPw");
+    public final StringPath userPassword = createString("userPassword");
 
     public final NumberPath<Long> userSeq = createNumber("userSeq", Long.class);
 

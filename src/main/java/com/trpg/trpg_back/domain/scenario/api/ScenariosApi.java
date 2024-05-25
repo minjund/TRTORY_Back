@@ -9,6 +9,7 @@ import com.trpg.trpg_back.global.comm.responseData.ResponseDataCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.List;
 public class ScenariosApi {
 
     private final ScenariosServiceImpl scenariosServiceImpl;
-
+    
     @GetMapping("/scenario-type")
     public ResponseEntity<ResponseData<ScenariosType[]>> BoardsTypeList(){
         //유저 entity 세팅
@@ -72,7 +73,7 @@ public class ScenariosApi {
 
     }
 
-    @PutMapping("/update-board")
+    @PutMapping("/update-scenario")
     public ResponseEntity<ResponseData<List<ScenariosResponse>>> updateBoard(@RequestBody ScenariosRequest scenariosRequest) {
 
         Long updateBoardId = scenariosServiceImpl.updateScenario(scenariosRequest);

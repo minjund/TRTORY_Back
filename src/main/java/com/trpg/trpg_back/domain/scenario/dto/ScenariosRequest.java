@@ -12,5 +12,4 @@ public class ScenariosRequest {
     ScenariosType scenarioType;
     String scenarioContents;
     int writerId;
-
 }
