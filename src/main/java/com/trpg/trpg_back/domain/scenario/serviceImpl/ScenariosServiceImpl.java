@@ -1,7 +1,7 @@
 package com.trpg.trpg_back.domain.scenario.serviceImpl;
 
 
-import com.trpg.trpg_back.domain.scenario.dao.ScenariosRepository;
+import com.trpg.trpg_back.domain.scenario.dao.jpa.ScenariosRepository;
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;
 import com.trpg.trpg_back.domain.scenario.entity.Scenarios;

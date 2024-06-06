@@ -1,4 +1,4 @@
-package com.trpg.trpg_back.domain.scenario.dao;
+package com.trpg.trpg_back.domain.scenario.dao.jpa;
 
 
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;

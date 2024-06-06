@@ -1,15 +1,11 @@
 package com.trpg.trpg_back.global.config;
 
 
-import com.trpg.trpg_back.global.config.auth.CustomUserDetailsService;
 import com.trpg.trpg_back.global.filter.JwtRequestFilter;
-import com.trpg.trpg_back.global.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -19,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
@@ -27,19 +22,22 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 public class SecurityConfig {
 
     private final JwtRequestFilter jwtRequestFilter;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-         http
+        http
                 .csrf(AbstractHttpConfigurer::disable)
-                .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
+                .cors(AbstractHttpConfigurer::disable)
+                .addFilterAfter(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests((authorize) ->
                         authorize
-                                .requestMatchers("api/vi/user/**").authenticated()
-                                .anyRequest().permitAll()
+                                .requestMatchers("/api/v1/users/**").permitAll() // 이 경로는 인증 없이 접근 가능
+                                .requestMatchers("/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**").permitAll() // Swagger 경로도 인증 없이 접근 가능
+                                .anyRequest().authenticated()
                 )
                 .sessionManagement((session) ->
-                    session
-                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                        session
+                                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .formLogin(AbstractHttpConfigurer::disable)
                 .httpBasic(AbstractHttpConfigurer::disable);

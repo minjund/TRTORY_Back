@@ -1,17 +1,16 @@
 package com.trpg.trpg_back.domain.user.entity;
 
-import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
-import com.trpg.trpg_back.domain.user.dao.UsersRepository;
 import com.trpg.trpg_back.domain.user.dto.UsersRequest;
 import com.trpg.trpg_back.global.util.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
-import org.apache.catalina.User;
+import org.springframework.data.redis.core.RedisHash;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Getter
 @Table(name="user")
+@RedisHash(value = "users", timeToLive = 300)
 public class Users extends BaseEntity {
 
         @Id
@@ -36,8 +35,8 @@ public class Users extends BaseEntity {
         public void createUser(UsersRequest usersRequest) {
                 this.userEmail = usersRequest.getUserEmail();
                 this.userPassword = passwordEncrypt(usersRequest.getUserPassword());
-
-                this.useYn = "Y";
+                this.userDiscordId = usersRequest.getUserDiscordId();
+                this.userNickname = usersRequest.getUserNickname();
                 this.useYn = "Y";
         }
 
