@@ -22,49 +22,21 @@ public class UsersApi {
     private final UsersServiceImpl usersServiceImpl;
 
     @PostMapping({"/signup"})
-    public ResponseEntity<ResponseData<Map<String, String>>> signUp (@RequestBody UsersRequest usersRequest) throws Exception {
+    public ResponseEntity<?> signUp (@RequestBody UsersRequest usersRequest) {
 
-        //회원 가입 여부
-        ResponseData<Map<String, String>> responseDataDTO = new ResponseData<>();
-
-        Long accessToken = usersServiceImpl.signup(usersRequest);
-
-        if (accessToken != 0) {
-            responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-            responseDataDTO.setMessage("회원가입 성공");
-        } else {
-            responseDataDTO.setCode(ResponseDataCode.BAD.getCode());
-            responseDataDTO.setMessage("회원가입 실패");
-        }
-
-        return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
+        Long signupId = usersServiceImpl.signup(usersRequest);
+        return new ResponseEntity<>(signupId,HttpStatus.OK);
     }
     @GetMapping({"/signIn"})
-    public ResponseEntity<ResponseData<Map<String, String>>> signIn (@RequestParam(value = "userId") String userId, @RequestParam(value = "userPw") String userPw) throws Exception {
-        ResponseData<Map<String, String>> responseDataDTO = new ResponseData<>();
-
-        Map<String, String> tokens = usersServiceImpl.getLoginAccessRefreshToken(userId, userPw);
-
-        responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-        responseDataDTO.setMessage("로그인 토큰 발급 성공");
-        responseDataDTO.setItem(tokens);
-
-        //유저 entity 세팅
-        return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
+    public ResponseEntity<?> signIn (@RequestParam(value = "userId") String userId, @RequestParam(value = "userPw") String userPw) throws Exception {
+        Map<String, String> loginAccessRefreshToken = usersServiceImpl.getLoginAccessRefreshToken(userId, userPw);
+        return new ResponseEntity<>(loginAccessRefreshToken, HttpStatus.OK);
     }
 
     @PostMapping("/refresh-token")
-    public ResponseEntity<ResponseData<Map<String, String>>> refresh(@RequestBody Map<String, String> request) throws Exception {
-         ResponseData<Map<String, String>> responseDataDTO = new ResponseData<>();
-
+    public ResponseEntity<?> refresh(@RequestBody Map<String, String> request) throws Exception {
         Map<String, String> accessAndReFreshToken = usersServiceImpl.reissuanceAccessToken(request);
 
-        responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-        responseDataDTO.setMessage("토큰 재발급 성공");
-        responseDataDTO.setItem(accessAndReFreshToken);
-
-        return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
-
-
+        return new ResponseEntity<>(accessAndReFreshToken, HttpStatus.OK);
     }
 }

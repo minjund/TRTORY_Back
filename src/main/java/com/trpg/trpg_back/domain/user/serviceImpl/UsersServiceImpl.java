@@ -25,8 +25,6 @@ public class UsersServiceImpl {
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
 
-
-    @CachePut(cacheNames = "users", key = "#seq")
     public Long signup(UsersRequest usersRequest) {
 
         users.createUser(usersRequest);
@@ -35,7 +33,6 @@ public class UsersServiceImpl {
         return userSaveInfo.getUserSeq();
     }
 
-    @Cacheable(cacheNames = "users", key = "#seq")
     public Map<String, String> getLoginAccessRefreshToken(String userId, String userPw) {
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userId, userPw));
 
@@ -47,6 +44,7 @@ public class UsersServiceImpl {
         Map<String, String> tokens = new HashMap<>();
         tokens.put("access_token", accessToken);
         tokens.put("refresh_token", refreshToken);
+
         return tokens;
     }
 

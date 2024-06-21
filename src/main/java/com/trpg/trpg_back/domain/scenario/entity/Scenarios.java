@@ -34,13 +34,16 @@ public class Scenarios extends BaseEntity {
     private String scenarioType;
 
     @Column(name = "user_count", columnDefinition = "int", nullable = true)
-    private int userCount;
+    private Integer userCount;
 
     @Column(name = "play_difficulty", columnDefinition = "float", nullable = true)
     private float playDifficulty;
 
     @Column(name = "kippering_difficulty", columnDefinition = "float", nullable = true)
     private float kipperingDifficulty;
+
+    @Column(name = "like_count", columnDefinition = "bigint", nullable = true)
+    private int likeCount;
 
     @Column(name = "expect_play_time", columnDefinition = "datetime", nullable = true)
     private LocalDateTime expectPlayTime;
@@ -65,12 +68,13 @@ public class Scenarios extends BaseEntity {
     }
 
 
-    public void updateScenario(Long scenarioId, String scenarioTitle, String scenarioContents, ScenariosType scenarioType, int writerId) {
-        this.scenarioId = scenarioId;
-        this.scenarioTitle = scenarioTitle;
-        this.scenarioContents = scenarioContents;
-        this.scenarioType = scenarioType.name();
-        this.writerId = writerId;
+    public void updateScenario(ScenariosRequest scenariosRequest) {
+        this.scenarioId = scenariosRequest.getScenarioId();
+        this.scenarioTitle = scenariosRequest.getScenarioTitle();
+        this.likeCount = 0;
+        this.scenarioContents = scenariosRequest.getScenarioContents();
+        this.scenarioType = scenariosRequest.getScenarioType().name();
+        this.writerId = scenariosRequest.getWriterId();
     }
 
     // == 비즈니스 로직 == //
@@ -79,4 +83,10 @@ public class Scenarios extends BaseEntity {
     public ScenariosType[] scenarioTypeList() {
         return ScenariosType.values();
     }
+
+    //좋아요 증가
+    public void updateScenarioLikeCount() {
+        this.likeCount++;
+    }
+
 }

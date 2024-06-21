@@ -43,4 +43,17 @@ class ScenariosTest {
         //then
         assertEquals(4, scenariosTypes.length);
     }
+
+    @Test
+    @DisplayName("좋아요 수 증가")
+    void updateScenarioLikeCount() {
+        //given
+        Scenarios scenarios = new Scenarios();
+
+        //when
+        scenarios.updateScenarioLikeCount();
+
+        //then
+        assertEquals(1, scenarios.getLikeCount());
+    }
 }

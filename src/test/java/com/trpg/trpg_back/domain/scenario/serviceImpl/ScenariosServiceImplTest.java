@@ -91,6 +91,5 @@ class ScenariosServiceImplTest {
 
         //then
         assertFalse(scenarioRespons.isEmpty());
-
     }
 }

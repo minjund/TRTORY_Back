@@ -5,7 +5,6 @@ import lombok.Data;
 
 @Data
 public class ScenariosRequest {
-    Long scenarioSeq;
     Long scenarioId;
     String scenarioTitle;
     String scenarioComment;

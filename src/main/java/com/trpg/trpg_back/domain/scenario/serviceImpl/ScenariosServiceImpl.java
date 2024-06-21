@@ -33,13 +33,7 @@ public class ScenariosServiceImpl {
         Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId())
                 .orElseThrow(NoSearchScenariosException::new);
 
-        scenarios.updateScenario(
-                scenariosRequest.getScenarioId(),
-                scenariosRequest.getScenarioTitle(),
-                scenariosRequest.getScenarioContents(),
-                scenariosRequest.getScenarioType(),
-                scenariosRequest.getWriterId()
-        );
+        scenarios.updateScenario(scenariosRequest);
 
         return scenarios.getScenarioId();
     }
@@ -52,5 +46,15 @@ public class ScenariosServiceImpl {
 
     public ScenariosType[] ScenarioTypeList() {
         return scenarios.scenarioTypeList();
+    }
+
+    public Long updateLikeScenario(ScenariosRequest scenariosRequest) {
+
+        Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId())
+                .orElseThrow(NoSearchScenariosException::new);
+
+        scenarios.updateScenarioLikeCount();
+
+        return scenarios.getScenarioId();
     }
 }

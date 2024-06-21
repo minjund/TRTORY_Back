@@ -25,6 +25,8 @@ public class QScenarios extends EntityPathBase<Scenarios> {
 
     public final NumberPath<Float> kipperingDifficulty = createNumber("kipperingDifficulty", Float.class);
 
+    public final NumberPath<Integer> likeCount = createNumber("likeCount", Integer.class);
+
     //inherited
     public final DateTimePath<java.time.LocalDateTime> mod_date = _super.mod_date;
 

@@ -22,72 +22,40 @@ public class ScenariosApi {
     private final ScenariosServiceImpl scenariosServiceImpl;
     
     @GetMapping("/scenario-type")
-    public ResponseEntity<ResponseData<ScenariosType[]>> BoardsTypeList(){
+    public ResponseEntity<?> BoardsTypeList(){
         //유저 entity 세팅
         ScenariosType[] scenariosTypes = scenariosServiceImpl.ScenarioTypeList();
-        ResponseData<ScenariosType[]> responseDataDTO = new ResponseData<>();
 
-        responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-        responseDataDTO.setMessage("게시글 조회 성공");
-        responseDataDTO.setItem(scenariosTypes);
-
-        return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
+        return new ResponseEntity<>(scenariosTypes, HttpStatus.OK);
     }
 
     @GetMapping({"/scenarios-list/{scenariosId}", "/scenarios-list"})
-    public ResponseEntity<ResponseData<List<ScenariosResponse>>> searchBoard(@PathVariable(value = "scenariosId", required = false) Long boardId){
-        ResponseData<List<ScenariosResponse>> responseDataDTO = new ResponseData<>();
-
+    public ResponseEntity<?> searchBoard(@PathVariable(value = "scenariosId", required = false) Long boardId){
         List<ScenariosResponse> boards = scenariosServiceImpl.searchScenario(boardId);
 
-        if(boards.isEmpty()){
-            responseDataDTO.setCode(ResponseDataCode.NOT_FOUND.getCode());
-            responseDataDTO.setMessage("게시글이 존재하지 않습니다.");
-            return new ResponseEntity<>(responseDataDTO, HttpStatus.NOT_FOUND);
-        } else {
-            responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-            responseDataDTO.setMessage("게시글 조회 성공");
-            responseDataDTO.setItem(boards);
-            return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(boards, HttpStatus.OK);
     }
 
     @PostMapping("/create-board")
-    public ResponseEntity<ResponseData<Long>> createBoard(@RequestBody ScenariosRequest scenariosRequest) {
+    public ResponseEntity<?> createBoard(@RequestBody ScenariosRequest scenariosRequest) {
+        Long scenarioId = scenariosServiceImpl.saveScenario(scenariosRequest);
 
-        ResponseData<Long> responseDataDTO = new ResponseData<>();
-        Long saveBoardId = scenariosServiceImpl.saveScenario(scenariosRequest);
-
-        if (saveBoardId == null) {
-            responseDataDTO.setCode(ResponseDataCode.SERVER_ERROR.getCode());
-            responseDataDTO.setMessage("게시글 생성 실패");
-            return new ResponseEntity<>(responseDataDTO, HttpStatus.BAD_REQUEST);
-        }else {
-            responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-            responseDataDTO.setMessage("게시글 생성 성공");
-            responseDataDTO.setItem(saveBoardId);
-        }
-
-
-        return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
-
+        return new ResponseEntity<>(scenarioId, HttpStatus.OK);
     }
 
     @PutMapping("/update-scenario")
-    public ResponseEntity<ResponseData<List<ScenariosResponse>>> updateBoard(@RequestBody ScenariosRequest scenariosRequest) {
+    public ResponseEntity<?> updateBoard(@RequestBody ScenariosRequest scenariosRequest) {
 
         Long updateBoardId = scenariosServiceImpl.updateScenario(scenariosRequest);
 
-        if (updateBoardId == null) {
-            ResponseData<List<ScenariosResponse>> responseDataDTO = new ResponseData<>();
-            responseDataDTO.setCode(ResponseDataCode.SERVER_ERROR.getCode());
-            responseDataDTO.setMessage("게시글 수정 실패");
-            return new ResponseEntity<>(responseDataDTO, HttpStatus.BAD_REQUEST);
-        } else {
-            ResponseData<List<ScenariosResponse>> responseDataDTO = new ResponseData<>();
-            responseDataDTO.setCode(ResponseDataCode.SUCCESS.getCode());
-            responseDataDTO.setMessage("게시글 수정 성공");
-            return new ResponseEntity<>(responseDataDTO, HttpStatus.OK);
-        }
+        return new ResponseEntity<>(updateBoardId, HttpStatus.OK);
+    }
+
+    @PutMapping("/like-scenario")
+    public ResponseEntity<?> updateLike(@RequestBody ScenariosRequest scenariosRequest) {
+
+        Long updateBoardId = scenariosServiceImpl.updateLikeScenario(scenariosRequest);
+
+        return new ResponseEntity<>(updateBoardId, HttpStatus.OK);
     }
 }
