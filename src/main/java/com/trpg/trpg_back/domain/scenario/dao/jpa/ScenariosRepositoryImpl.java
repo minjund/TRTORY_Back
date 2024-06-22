@@ -25,6 +25,7 @@ public class ScenariosRepositoryImpl implements ScenariosCustomRepository {
                         scenarios.scenarioId,
                         scenarios.scenarioTitle,
                         scenarios.scenarioContents,
+                        scenarios.likeCount,
                         scenarios.writerId))
                 .from(scenarios)
                 .where(boardsTypeEq(ScenariosType.name()),

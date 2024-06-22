@@ -4,12 +4,9 @@ import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;
 import com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosType;
 import com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosServiceImpl;
-import com.trpg.trpg_back.global.comm.responseData.ResponseData;
-import com.trpg.trpg_back.global.comm.responseData.ResponseDataCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;

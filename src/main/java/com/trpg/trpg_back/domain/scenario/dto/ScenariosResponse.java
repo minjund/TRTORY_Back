@@ -5,19 +5,21 @@ import lombok.Data;
 @Data
 public class ScenariosResponse {
 
-    private Long scenario_id;
-    private String scenario_title;
-    private String scenario_contents;
-    private String scenario_type;
-    private int writer_id;
-    private String use_yn;
+    private Long scenarioId;
+    private String scenarioTitle;
+    private String scenarioContents;
+    private Integer likeCount;
+    private String scenarioType;
+    private int writerId;
+    private String useYn;
 
-    public ScenariosResponse(Long scenarioId, String scenarioTitle, String scenarioContents, Integer writerId) {
-        this.scenario_id = scenarioId;
-        this.scenario_title = scenarioTitle;
-        this.scenario_contents = scenarioContents;
-        this.writer_id = writerId;
-        // scenario_type과 use_yn 필드는 적절한 값으로 설정하거나, 추가적인 파라미터를 받아 설정해야 합니다.
+    //jpa 생성자
+    public ScenariosResponse(Long scenarioId, String scenarioTitle, String scenarioContents, Integer likeCount, Integer writerId) {
+        this.scenarioId = scenarioId;
+        this.scenarioTitle = scenarioTitle;
+        this.scenarioContents = scenarioContents;
+        this.likeCount = likeCount;
+        this.writerId = writerId;
     }
 
 }

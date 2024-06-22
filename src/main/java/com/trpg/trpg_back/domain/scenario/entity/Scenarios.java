@@ -85,7 +85,7 @@ public class Scenarios extends BaseEntity {
     }
 
     //좋아요 증가
-    public void updateScenarioLikeCount() {
+    public void increasedLikeCount() {
         this.likeCount++;
     }
 

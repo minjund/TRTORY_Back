@@ -51,7 +51,7 @@ class ScenariosTest {
         Scenarios scenarios = new Scenarios();
 
         //when
-        scenarios.updateScenarioLikeCount();
+        scenarios.increasedLikeCount();
 
         //then
         assertEquals(1, scenarios.getLikeCount());

@@ -6,7 +6,9 @@ import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;
 import com.trpg.trpg_back.domain.scenario.entity.Scenarios;
 import com.trpg.trpg_back.domain.scenario.exception.NoSearchScenariosException;
+import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,12 +50,13 @@ public class ScenariosServiceImpl {
         return scenarios.scenarioTypeList();
     }
 
+    @Transactional
     public Long updateLikeScenario(ScenariosRequest scenariosRequest) {
 
         Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId())
                 .orElseThrow(NoSearchScenariosException::new);
 
-        scenarios.updateScenarioLikeCount();
+        scenarios.increasedLikeCount();
 
         return scenarios.getScenarioId();
     }
