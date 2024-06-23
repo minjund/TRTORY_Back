@@ -30,6 +30,8 @@ public class QScenarios extends EntityPathBase<Scenarios> {
     //inherited
     public final DateTimePath<java.time.LocalDateTime> mod_date = _super.mod_date;
 
+    public final NumberPath<Integer> partiUserCount = createNumber("partiUserCount", Integer.class);
+
     public final NumberPath<Float> playDifficulty = createNumber("playDifficulty", Float.class);
 
     //inherited
@@ -46,8 +48,6 @@ public class QScenarios extends EntityPathBase<Scenarios> {
     public final StringPath scenarioTitle = createString("scenarioTitle");
 
     public final StringPath scenarioType = createString("scenarioType");
-
-    public final NumberPath<Integer> userCount = createNumber("userCount", Integer.class);
 
     public final StringPath useYn = createString("useYn");
 

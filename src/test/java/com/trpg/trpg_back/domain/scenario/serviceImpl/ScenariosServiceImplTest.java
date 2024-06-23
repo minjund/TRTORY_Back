@@ -1,13 +1,18 @@
 package com.trpg.trpg_back.domain.scenario.serviceImpl;
 
+import com.trpg.trpg_back.domain.scenario.dao.jpa.ScenariosRepository;
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
 import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;
+import com.trpg.trpg_back.domain.scenario.entity.Scenarios;
 import com.trpg.trpg_back.domain.scenario.exception.NoSearchScenariosException;
 import lombok.extern.slf4j.Slf4j;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -25,6 +30,9 @@ class ScenariosServiceImplTest {
 
     @Autowired
     private ScenariosServiceImpl scenariosServiceImpl;
+
+    @Autowired
+    private ScenariosRepository scenariosRepository;
 
     @Test
     @DisplayName("게시판 생성 테스트")
@@ -48,7 +56,7 @@ class ScenariosServiceImplTest {
     void updateDbFailBoards() {
         //given
         ScenariosRequest scenariosRequest = new ScenariosRequest();
-        scenariosRequest.setScenarioId(2L);
+        scenariosRequest.setScenarioId(9999999L);
         scenariosRequest.setScenarioTitle("신나는모험");
         scenariosRequest.setScenarioContents("나나나");
         scenariosRequest.setScenarioType(ScenariosType.NEW);
@@ -62,22 +70,25 @@ class ScenariosServiceImplTest {
 
     @Test
     @DisplayName("게시판 업데이트 성공")
-    @Transactional
     void updateDbBoards() {
         //given
         ScenariosRequest scenariosRequest = new ScenariosRequest();
+        scenariosRequest.setScenarioId(9L);
         scenariosRequest.setScenarioTitle("신나는모험");
         scenariosRequest.setScenarioContents("나나나");
         scenariosRequest.setScenarioType(ScenariosType.NEW);
 
         //when
         //저장 후 업데이트
-        Long scenario = scenariosServiceImpl.saveScenario(scenariosRequest);
-        scenariosRequest.setScenarioId(scenario);
         Long updateBoardId = scenariosServiceImpl.updateScenario(scenariosRequest);
+
+        Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId())
+                .orElseThrow(NoSearchScenariosException::new);
 
         //then
         assertEquals(scenariosRequest.getScenarioId(), updateBoardId);
+        assertEquals(scenariosRequest.getScenarioTitle(), scenarios.getScenarioTitle());
+        assertEquals(scenariosRequest.getScenarioContents(), scenarios.getScenarioContents());
     }
 
     @Test
@@ -85,14 +96,14 @@ class ScenariosServiceImplTest {
     void searchBoards() {
         //given
         ScenariosRequest scenariosRequest = new ScenariosRequest();
+        scenariosRequest.setScenarioId(9L);
         scenariosRequest.setScenarioTitle("신나는모험");
         scenariosRequest.setScenarioContents("나나나");
         scenariosRequest.setScenarioType(ScenariosType.NEW);
 
         //when
         //게시판 조회
-        Long scenarioId = scenariosServiceImpl.saveScenario(scenariosRequest);
-        List<ScenariosResponse> scenarioRespons = scenariosServiceImpl.searchScenario(scenarioId);
+        List<ScenariosResponse> scenarioRespons = scenariosServiceImpl.searchScenario(scenariosRequest.getScenarioId());
 
         //then
         assertFalse(scenarioRespons.isEmpty());
@@ -103,7 +114,7 @@ class ScenariosServiceImplTest {
     void updateLikeBoards() throws InterruptedException {
         //given
         ScenariosRequest scenariosRequest = new ScenariosRequest();
-        scenariosRequest.setScenarioId(20L);
+        scenariosRequest.setScenarioId(9L);
         scenariosRequest.setScenarioType(ScenariosType.NEW);
 
         // thread 사용할 수 있는 서비스 선언, 몇 개의 스레드 사용할건지 지정

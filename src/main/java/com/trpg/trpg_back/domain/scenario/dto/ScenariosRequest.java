@@ -8,6 +8,7 @@ public class ScenariosRequest {
     Long scenarioId;
     String scenarioTitle;
     String scenarioComment;
+    Integer scenarioLikeCount;
     ScenariosType scenarioType;
     String scenarioContents;
     int writerId;

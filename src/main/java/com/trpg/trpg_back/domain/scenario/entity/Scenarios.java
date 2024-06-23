@@ -6,12 +6,14 @@ import com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosType;
 import com.trpg.trpg_back.global.util.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @Table(name = "scenario")
+@DynamicUpdate
 public class Scenarios extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,8 +35,9 @@ public class Scenarios extends BaseEntity {
     @Column(name = "scenario_type", columnDefinition = "varchar(45)", nullable = false)
     private String scenarioType;
 
-    @Column(name = "user_count", columnDefinition = "int", nullable = true)
-    private Integer userCount;
+    // 참여 인원 수
+    @Column(name = "parti_user_count", columnDefinition = "int", nullable = true)
+    private Integer partiUserCount;
 
     @Column(name = "play_difficulty", columnDefinition = "float", nullable = true)
     private float playDifficulty;
@@ -43,7 +46,7 @@ public class Scenarios extends BaseEntity {
     private float kipperingDifficulty;
 
     @Column(name = "like_count", columnDefinition = "bigint", nullable = true)
-    private int likeCount;
+    private Integer likeCount;
 
     @Column(name = "expect_play_time", columnDefinition = "datetime", nullable = true)
     private LocalDateTime expectPlayTime;
@@ -58,10 +61,10 @@ public class Scenarios extends BaseEntity {
     private String useYn;
 
     public void createScenario(ScenariosRequest scenariosRequest) {
-
         this.scenarioId = this.scenarioSeq;
         this.scenarioTitle = scenariosRequest.getScenarioTitle();
         this.scenarioContents = scenariosRequest.getScenarioContents();
+        this.likeCount = 0;
         this.scenarioType = scenariosRequest.getScenarioType().name();
         this.writerId = scenariosRequest.getWriterId();
         this.useYn = "Y";
@@ -69,9 +72,9 @@ public class Scenarios extends BaseEntity {
 
 
     public void updateScenario(ScenariosRequest scenariosRequest) {
+        this.scenarioSeq = scenariosRequest.getScenarioId();
         this.scenarioId = scenariosRequest.getScenarioId();
         this.scenarioTitle = scenariosRequest.getScenarioTitle();
-        this.likeCount = 0;
         this.scenarioContents = scenariosRequest.getScenarioContents();
         this.scenarioType = scenariosRequest.getScenarioType().name();
         this.writerId = scenariosRequest.getWriterId();
