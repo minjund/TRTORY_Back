@@ -46,7 +46,7 @@ public class Scenarios extends BaseEntity {
     private float kipperingDifficulty;
 
     @Column(name = "like_count", columnDefinition = "bigint", nullable = true)
-    private Integer likeCount;
+    private int likeCount;
 
     @Column(name = "expect_play_time", columnDefinition = "datetime", nullable = true)
     private LocalDateTime expectPlayTime;

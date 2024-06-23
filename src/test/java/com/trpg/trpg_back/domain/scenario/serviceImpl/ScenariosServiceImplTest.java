@@ -6,16 +6,13 @@ import com.trpg.trpg_back.domain.scenario.dto.ScenariosResponse;
 import com.trpg.trpg_back.domain.scenario.entity.Scenarios;
 import com.trpg.trpg_back.domain.scenario.exception.NoSearchScenariosException;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -33,6 +30,13 @@ class ScenariosServiceImplTest {
 
     @Autowired
     private ScenariosRepository scenariosRepository;
+
+    Integer likeCount = null;
+    @BeforeEach
+    void setUp() {
+        List<ScenariosResponse> scenariosResponses = scenariosServiceImpl.searchScenario(9L);
+        likeCount = scenariosResponses.get(0).getLikeCount();
+    }
 
     @Test
     @DisplayName("게시판 생성 테스트")
@@ -139,12 +143,12 @@ class ScenariosServiceImplTest {
 
             latch.countDown();
         });
+
         latch.await();
 
-        List<ScenariosResponse> scenariosResponses = scenariosServiceImpl.searchScenario(scenariosRequest.getScenarioId());
-
+        Optional<Scenarios> byScenarioId = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId());
         //then
-        assertEquals(2, scenariosResponses.get(0).getLikeCount());
+        assertEquals(likeCount+2, byScenarioId.get().getLikeCount());
 
     }
 }

@@ -40,8 +40,8 @@ public class ScenariosServiceImpl {
         return scenarios.getScenarioId();
     }
 
+    @Transactional
     public List<ScenariosResponse> searchScenario(Long boardId) {
-
         return scenariosRepository.searchScenario(boardId, ScenariosType.NEW);
 
     }
