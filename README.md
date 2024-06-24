@@ -38,19 +38,6 @@ Trpg 시나리오 플랫폼은 JDK 17, Spring 3.x, Gradle로 개발과 테스트
     #유저 통합 테스트 실행(레디스 사용)
     ./gradlew test --tests "com.trpg.trpg_back.domain.user.dao.redis.RedisUsersRepositoryTest"
 
-
-### 테스트 케이스 구조 ###
-    - 테스트 케이스는 테스트 대상의 패키지 구조를 따라갑니다.
-
-    ScenariosServiceImplTest는 CURD와 시나리오 좋아요 API의 동시성 테스트를 진행합니다.
-
-    ScenariosTest는 시나리오 엔티티의 유효성 및 핵심 비지니스 로직을 테스트 합니다.
-
-    UsersRepositoryTest는 유저 CURD 검사를 진행합니다.
-    
-    RidisUsersRepositoryTest는 레디스를 사용한 유저 엔티티의 유효성 검사를 진행합니다.
-
-### 테스트 결과 ##
     - 전체 테스트 실행
     > Task :test
     ....
@@ -79,3 +66,14 @@ Trpg 시나리오 플랫폼은 JDK 17, Spring 3.x, Gradle로 개발과 테스트
     ....
     BUILD SUCCESSFUL in 22s
     5 actionable tasks: 1 executed, 4 up-to-date
+
+### 테스트 케이스 구조 ###
+    - 테스트 케이스는 테스트 대상의 패키지 구조를 따라갑니다.
+
+    ScenariosServiceImplTest는 CURD와 시나리오 좋아요 API의 동시성 테스트를 진행합니다.
+
+    ScenariosTest는 시나리오 엔티티의 유효성 및 핵심 비지니스 로직을 테스트 합니다.
+
+    UsersRepositoryTest는 유저 CURD 검사를 진행합니다.
+    
+    RidisUsersRepositoryTest는 레디스를 사용한 유저 엔티티의 유효성 검사를 진행합니다.
