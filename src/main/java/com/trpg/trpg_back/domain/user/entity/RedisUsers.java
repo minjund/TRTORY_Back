@@ -2,7 +2,6 @@ package com.trpg.trpg_back.domain.user.entity;
 
 import com.trpg.trpg_back.domain.user.dto.UsersRequest;
 import com.trpg.trpg_back.global.util.BaseEntity;
-import jakarta.persistence.*;
 import lombok.Getter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
