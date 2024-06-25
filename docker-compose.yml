@@ -1,14 +1,18 @@
 services:
   mysql:
-    image: mysql:8.0
+    image: mysql:latest
     container_name: mysql-container
+    volumes:
+      - ./db/mysql/data:/var/lib/mysql
+      - ./db/mysql/init:/docker-entrypoint-initdb.d
+    command:
+      - '--character-set-server=utf8mb4'
+      - '--collation-server=utf8mb4_unicode_ci'
     environment:
       MYSQL_ROOT_PASSWORD: 1234
       MYSQL_DATABASE: trpg
-      MYSQL_USER: root
-      MYSQL_PASSWORD: 1234
     ports:
-      - "3306:3306"
+      - "43306:3306"
     networks:
       - trpg-network
 
@@ -16,6 +20,8 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: trtory-backend-api
+    container_name: trtory-container
     depends_on:
       - mysql
     environment:
@@ -28,5 +34,5 @@ services:
     networks:
       - trpg-network
 
-  networks:
-    trpg-network:
+networks:
+  trpg-network:
