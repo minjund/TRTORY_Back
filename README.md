@@ -76,4 +76,3 @@ Trpg 시나리오 플랫폼은 JDK 17, Spring 3.x, Gradle로 개발과 테스트
     UsersRepositoryTest는 유저 CURD 검사를 진행합니다.
     
     RidisUsersRepositoryTest는 레디스를 사용한 유저 엔티티의 유효성 검사를 진행합니다.
-  
