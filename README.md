@@ -22,50 +22,49 @@ Trpg 시나리오 플랫폼은 JDK 17, Spring 3.x, Gradle로 개발과 테스트
 
     java -jar build/libs/trpg-0.0.1-SNAPSHOT.jar #jar 파일 실행
 
-### 테스트 실행 방법 ###
-    #전체 테스트 실행
-    ./gradlew test
-
-    #시나리오 통합 테스트 실행
-    ./gradlew test --tests "com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosServiceImplTest" 
-
-    #시나리오 유닛 테스트 실행
-    ./gradlew test --tests "com.trpg.trpg_back.domain.scenario.entity.ScenariosTest" 
-
-    #유저 통합 테스트 실행
-    ./gradlew test --tests "com.trpg.trpg_back.domain.user.dao.UsersRepositoryTest"
-
-    #유저 통합 테스트 실행(레디스 사용)
-    ./gradlew test --tests "com.trpg.trpg_back.domain.user.dao.redis.RedisUsersRepositoryTest"
-
-    - 전체 테스트 실행
+## 테스트 실행
+    $ ./gradlew test
+    
+    
     > Task :test
     ....
     BUILD SUCCESSFUL in 13s
     5 actionable tasks: 1 executed, 4 up-to-date
 
-    - 시나리오 통합 테스트 실행 결과
+## 시나리오 통합 테스트
+    $ ./gradlew test --tests "com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosServiceImplTest"
+    
+
     > Task :test
     ....
     BUILD SUCCESSFUL in 14s
     5 actionable tasks: 1 executed, 4 up-to-date
 
-    - 시나리오 유닛 테스트 실행 결과
+## 시나리오 유닛 테스트
+    $ ./gradlew test --tests "com.trpg.trpg_back.domain.scenario.entity.ScenariosTest"
+
+
     > Task :test
     BUILD SUCCESSFUL in 3s
     5 actionable tasks: 5 up-to-date
 
-    - 유저 통합 테스트 실행 결과
+## 유저 통합 테스트 실행
+    $ ./gradlew test --tests "com.trpg.trpg_back.domain.user.dao.UsersRepositoryTest"
+
+
     > Task :test
     ....
     BUILD SUCCESSFUL in 14s
     5 actionable tasks: 1 executed, 4 up-to-date
 
-    #유저 통합 테스트 실행(레디스 사용)
+## 유저 통합 테스트 실행(레디스 사용)
+    $ ./gradlew test --tests "com.trpg.trpg_back.domain.user.dao.redis.RedisUsersRepositoryTest"
+
+
     > Task :test
-    ....
-    BUILD SUCCESSFUL in 22s
-    5 actionable tasks: 1 executed, 4 up-to-date
+      ....
+      BUILD SUCCESSFUL in 22s
+      5 actionable tasks: 1 executed, 4 up-to-date
 
 ### 테스트 케이스 구조 ###
     - 테스트 케이스는 테스트 대상의 패키지 구조를 따라갑니다.
