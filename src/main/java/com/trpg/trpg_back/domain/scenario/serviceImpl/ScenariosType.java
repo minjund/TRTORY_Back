@@ -5,6 +5,7 @@ public enum ScenariosType {
 
     private final String type;
 
+
     ScenariosType() {
         this.type = name();
     }

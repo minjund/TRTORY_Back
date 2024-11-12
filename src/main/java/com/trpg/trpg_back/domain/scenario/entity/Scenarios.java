@@ -5,7 +5,10 @@ import com.trpg.trpg_back.domain.scenario.dto.ScenariosRequest;
 import com.trpg.trpg_back.domain.scenario.serviceImpl.ScenariosType;
 import com.trpg.trpg_back.global.util.BaseEntity;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import java.time.LocalDateTime;
@@ -14,6 +17,7 @@ import java.time.LocalDateTime;
 @Getter
 @Table(name = "scenario")
 @DynamicUpdate
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Scenarios extends BaseEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,24 +64,26 @@ public class Scenarios extends BaseEntity {
     @Column(name = "use_yn", columnDefinition = "varchar(2)", nullable = false)
     private String useYn;
 
-    public void createScenario(ScenariosRequest scenariosRequest) {
-        this.scenarioId = this.scenarioSeq;
-        this.scenarioTitle = scenariosRequest.getScenarioTitle();
-        this.scenarioContents = scenariosRequest.getScenarioContents();
-        this.likeCount = 0;
-        this.scenarioType = scenariosRequest.getScenarioType().name();
-        this.writerId = scenariosRequest.getWriterId();
-        this.useYn = "Y";
+    public static Scenarios createScenario(ScenariosRequest scenariosRequest) {
+        Scenarios scenarios = new Scenarios();
+
+        scenarios.scenarioId = scenariosRequest.scenarioId();
+        scenarios.scenarioTitle = scenariosRequest.scenarioTitle();
+        scenarios.scenarioContents = scenariosRequest.scenarioContents();
+        scenarios.scenarioType = scenariosRequest.scenarioType().name();
+        scenarios.writerId = scenariosRequest.writerId();
+
+        return scenarios;
     }
 
 
     public void updateScenario(ScenariosRequest scenariosRequest) {
-        this.scenarioSeq = scenariosRequest.getScenarioId();
-        this.scenarioId = scenariosRequest.getScenarioId();
-        this.scenarioTitle = scenariosRequest.getScenarioTitle();
-        this.scenarioContents = scenariosRequest.getScenarioContents();
-        this.scenarioType = scenariosRequest.getScenarioType().name();
-        this.writerId = scenariosRequest.getWriterId();
+        this.scenarioSeq = scenariosRequest.scenarioId();
+        this.scenarioId = scenariosRequest.scenarioId();
+        this.scenarioTitle = scenariosRequest.scenarioTitle();
+        this.scenarioContents = scenariosRequest.scenarioContents();
+        this.scenarioType = scenariosRequest.scenarioType().name();
+        this.writerId = scenariosRequest.writerId();
     }
 
     // == 비즈니스 로직 == //

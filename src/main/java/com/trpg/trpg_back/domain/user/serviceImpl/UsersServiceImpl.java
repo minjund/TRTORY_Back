@@ -19,15 +19,14 @@ import java.util.Map;
 @Service
 @RequiredArgsConstructor
 public class UsersServiceImpl {
-    private static final Users users = new Users();
     private final UsersRepository userRepository;
     private final JwtUtil jwtUtil;
     private final AuthenticationManager authenticationManager;
     private final UserDetailsService userDetailsService;
 
     public Long signup(UsersRequest usersRequest) {
+        Users users = userRepository.findByUserEmail(usersRequest.getUserEmail()).orElseThrow();
 
-        users.createUser(usersRequest);
         Users userSaveInfo = userRepository.save(users);
 
         return userSaveInfo.getUserSeq();
@@ -65,5 +64,3 @@ public class UsersServiceImpl {
         return tokens;
     }
 }
-
-

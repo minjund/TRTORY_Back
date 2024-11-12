@@ -17,22 +17,20 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ScenariosServiceImpl {
-    private static Scenarios scenarios = new Scenarios();
-
     private final ScenariosRepository scenariosRepository;
 
     @Transactional
     public Long saveScenario(ScenariosRequest scenariosRequest) {
-        scenarios.createScenario(scenariosRequest);
+        Scenarios scenarios = Scenarios.createScenario(scenariosRequest);
 
-        scenarios = scenariosRepository.save(scenarios);
+        scenariosRepository.save(scenarios);
 
         return scenarios.getScenarioId();
     }
 
     @Transactional
     public Long updateScenario(ScenariosRequest scenariosRequest) {
-        Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId())
+        Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.scenarioId())
                 .orElseThrow(NoSearchScenariosException::new);
 
         scenarios.updateScenario(scenariosRequest);
@@ -46,14 +44,10 @@ public class ScenariosServiceImpl {
 
     }
 
-    public ScenariosType[] ScenarioTypeList() {
-        return scenarios.scenarioTypeList();
-    }
-
     @Transactional
     public Long updateLikeScenario(ScenariosRequest scenariosRequest) {
 
-        Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.getScenarioId())
+        Scenarios scenarios = scenariosRepository.findByScenarioId(scenariosRequest.scenarioId())
                 .orElseThrow(NoSearchScenariosException::new);
 
         scenarios.increasedLikeCount();
