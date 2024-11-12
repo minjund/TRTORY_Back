@@ -18,13 +18,13 @@ public class ScenariosApi {
 
     private final ScenariosServiceImpl scenariosServiceImpl;
     
-    @GetMapping("/scenario-type")
-    public ResponseEntity<?> BoardsTypeList(){
-        //유저 entity 세팅
-        ScenariosType[] scenariosTypes = scenariosServiceImpl.ScenarioTypeList();
-
-        return new ResponseEntity<>(scenariosTypes, HttpStatus.OK);
-    }
+//    @GetMapping("/scenario-type")
+//    public ResponseEntity<?> BoardsTypeList(){
+//        //유저 entity 세팅
+//        ScenariosType[] scenariosTypes = scenariosServiceImpl.ScenarioTypeList();
+//
+//        return new ResponseEntity<>(scenariosTypes, HttpStatus.OK);
+//    }
 
     @GetMapping({"/scenarios-list/{scenariosId}", "/scenarios-list"})
     public ResponseEntity<?> searchBoard(@PathVariable(value = "scenariosId", required = false) Long boardId){
